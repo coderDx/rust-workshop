@@ -1,0 +1,68 @@
+'\" -*- coding: us-ascii -*-
+.if \n(.g .ds T< \\FC
+.if \n(.g .ds T> \\F[\n[.fam]]
+.de URL
+\\$2 \(la\\$1\(ra\\$3
+..
+.if \n(.g .mso www.tmac
+.TH mosquitto_pub 1 "3 March 2010" "" ""
+.SH NAME
+mosquitto_pub \- an mqtt version 3 client for publishing simple messages
+.SH SYNOPSIS
+'nh
+.fi
+.ad l
+\fBmosquitto_pub\fR \kx
+.if (\nx>(\n(.l/2)) .nr x (\n(.l/5)
+'in \n(.iu+\nxu
+[\fB-h\fR \fIhostname\fR] [\fB-i\fR \fIclient_id\fR] [\fB-p\fR \fIport number\fR] [\fB-q\fR \fImessage QoS\fR] [\fB-r\fR] \fB-m\fR \fImessage\fR \fB-t\fR \fImessage-topic\fR 
+'in \n(.iu-\nxu
+.ad b
+'hy
+.SH DESCRIPTION
+\fBmosquitto_pub\fR is a simple mqtt version 3 client that will publish a single message on a topic and exit.
+.SH OPTIONS
+.TP 
+\*(T<\fB\-h\fR\*(T>, \*(T<\fB\-\-host\fR\*(T>
+Specify the host to connect to. Defaults to localhost.
+.TP 
+\*(T<\fB\-i\fR\*(T>, \*(T<\fB\-\-id\fR\*(T>
+The id to use for this client. If not given, defaults to mosquitto_pub_ appended with the process id of the client.
+.TP 
+\*(T<\fB\-m\fR\*(T>, \*(T<\fB\-\-message\fR\*(T>
+The actual message payload to send.
+.TP 
+\*(T<\fB\-p\fR\*(T>, \*(T<\fB\-\-port\fR\*(T>
+Connect to the port specified instead of the default 1883.
+.TP 
+\*(T<\fB\-q\fR\*(T>, \*(T<\fB\-\-qos\fR\*(T>
+Specify the quality of service to use for the message, from 0, 1 and 2. Defaults to 0.
+.TP 
+\*(T<\fB\-r\fR\*(T>, \*(T<\fB\-\-retain\fR\*(T>
+If retain is given, the message will be retained as a "last know good" value on the broker. See \fBmqtt\fR(7) for more information.
+.TP 
+\*(T<\fB\-t\fR\*(T>, \*(T<\fB\-\-topic\fR\*(T>
+The mqtt topic on which to publish the message. See \fBmqtt\fR(7) for more information on mqtt topics.
+.SH EXAMPLES
+Publish temperature information to localhost with QoS 1:
+.TP 0.2i
+\(bu
+mosquitto_pub -t sensors/temperature -m 32 -q 1
+.PP
+Publish timestamp and temperature information to a remote host on a non-standard port and QoS 0:
+.TP 0.2i
+\(bu
+mosquitto_pub -h 192.168.1.1 -p 1885 -t sensors/temperature -m "1266193804 32"
+.PP
+Publish light switch status. Message is set to retained because there may be a long period of time between light switch events:
+.TP 0.2i
+\(bu
+mosquitto_pub -r -t switches/kitchen_lights/status -m "on"
+.SH BUGS
+\fBmosquitto_pub\fR bug information can be found at http://launchpad.net/mosquitto.
+.SH "SEE ALSO"
+\fBmqtt\fR(7)
+\fBmosquitto_sub\fR(1)
+\fBmosquitto\fR(8)
+.SH AUTHOR
+Roger Light <\*(T<roger@atchoo.org\*(T>>

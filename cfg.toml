@@ -1,0 +1,5 @@
+[mqtt] 
+mqtt_host = "test.mosquito.org"
+#mqtt_host = "broker.hivemq.com"
+wifi_ssid = "DxSamsungS8+"
+wifi_psk = "pringles"
